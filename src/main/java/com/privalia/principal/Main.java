@@ -11,9 +11,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.privalia.business.Dia;
 import com.privalia.util.FileUtil;
 
 public class Main {
+	ArrayList<Dia> Dias = new ArrayList<Dia>();
+	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws ParseException {
 		Date data = null;
@@ -32,9 +35,6 @@ public class Main {
 		
 
 		for (Map.Entry<String, String> Map : Cierre.entrySet()) {
-			//data = Lectura.parseDate(Map.getKey(), "dd-mmm-yyyy");
-			System.out.println(Map.getKey());
-		    
 		
 		}
 
