@@ -15,29 +15,44 @@ import com.privalia.business.Dia;
 import com.privalia.util.FileUtil;
 
 public class Main {
-	ArrayList<Dia> Dias = new ArrayList<Dia>();
-	
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args) throws ParseException {
-		Date data = null;
-	    DateFormat df = new SimpleDateFormat("dd-mmm-yyyy");
-		Map<String, String> Cierre = new HashMap<String, String>();
-		Map<String, String> Apertura = new HashMap<String, String>();
 
-		FileUtil Lectura = new FileUtil();
+    static ArrayList<Dia> Dias = new ArrayList<Dia>();
+    static Calendar now = Calendar.getInstance();
+    static int dia_semana;
+    static int dia_mes;
+    static int ultimo_jueves_mes;
 
-		Cierre = Lectura.ReadFileCierre("Cierre");
+    @SuppressWarnings("deprecation")
+    public static void main(String[] args) throws ParseException {
 
-		Apertura = Lectura.ReadFileCierre("Apertura");
+        BigDecimal inversion = new BigDecimal(49);
 
-		System.out.println(Cierre);
-		System.out.println(Apertura);
-		
+        FileUtil Lectura = new FileUtil();
 
-		for (Map.Entry<String, String> Map : Cierre.entrySet()) {
-		
-		}
+        //Cierre = Lectura.ReadFileCierre("Cierre");
+        Dias = Lectura.ReadFileCierre();
 
-	}
+        System.out.println(now.get(Calendar.DAY_OF_WEEK));
+
+        Iterator<Dia> it = Dias.iterator();
+// mientras al iterador queda proximo juego
+        while (it.hasNext()) {
+            Dia dia = it.next();
+            /*Logica para calcular los beneficios*/
+            now.setTime(dia.getFecha());
+            System.out.println(dia.getFecha());
+            //System.out.println(now.get(Calendar.DAY_OF_WEEK));
+            dia_semana = now.get(Calendar.DAY_OF_WEEK);
+            dia_mes = now.getActualMaximum(Calendar.DAY_OF_MONTH);
+            
+            //Falta añadir logica para saber si el dia actual esta dentro del ultimo dia de cada més.
+            if((dia_semana == 6 || dia_semana == 5)){
+               inversion = inversion.add(dia.getCierre().subtract(dia.getApertura()));
+            }
+        }
+        
+        //System.out.println(inversion);
+
+    }
 
 }
